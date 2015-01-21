@@ -1,8 +1,10 @@
 package dni.damnit;
 
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.RectF;
 
 import java.util.Random;
 
@@ -12,16 +14,39 @@ public class Planet {
 	public float rx;
 	public float ry;
 	public float radius;
+    MainActivity main;
+    Bitmap bitmap;
+	RectF bounds;
+	public float SAFE_ENTRY_SPEED = 10;		//TODO: Futz with this
 	
-	public float SAFE_ENTRY_SPEED = 2;		//TODO: Futz with this 
-	
-	public Planet(float rx, float ry, float radius) {
+	public Planet(float rx, float ry, float radius, MainActivity main,Bitmap bitmap) {
 		this.rx = rx;
 		this.ry = ry;
 		this.radius = radius;
-		massByG = 1400; // to be modified and considered at a laterDate;
+        this.main=main;
+        int screenwidth = main.screenWidth;
+		calculatemassByG();
+        this.bitmap = bitmap;
+        bounds = new RectF(rx-radius,ry-radius,rx+radius,ry+radius);
+
+
 	}
-	
+	private void calculatemassByG() {
+        int massByGContstant = 10;
+        int radiusConstant = 3;
+        massByG =(int)( massByGContstant*(radius*radius))/(radiusConstant*radiusConstant);
+
+
+    }
+
+    public boolean isClicked(float clickedX, float clickedY){
+        boolean ret = false;
+            if(clickedX<rx+radius && clickedX > rx-radius && clickedY < ry+radius && clickedY > ry-radius)
+                ret = true;
+        return ret;
+    }
+
+
 	private void enactGravity(Rocket rocket){
 		float dx = rx-rocket.rx;
 		float dy = ry-rocket.ry;
@@ -53,7 +78,8 @@ public class Planet {
 	private void drawSelf(Canvas canvas){
 		Paint paint = new Paint();
 		paint.setColor(Color.BLUE);
-		canvas.drawCircle(rx, ry, radius, paint);
+        bounds.set(rx-radius,ry-radius,rx+radius,ry+radius);
+        canvas.drawBitmap(bitmap,null,bounds,null);
 	}
 	
 	public void update(Canvas canvas, Rocket rocket){
