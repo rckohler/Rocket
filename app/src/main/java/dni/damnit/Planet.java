@@ -17,7 +17,7 @@ public class Planet {
     MainActivity main;
     Bitmap bitmap;
 	RectF bounds;
-	public float SAFE_ENTRY_SPEED = 10;		//TODO: Futz with this
+	public float SAFE_ENTRY_SPEED = 5;		//TODO: Futz with this
 	
 	public Planet(float rx, float ry, float radius, MainActivity main,Bitmap bitmap) {
 		this.rx = rx;

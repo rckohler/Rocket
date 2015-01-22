@@ -109,7 +109,7 @@ public class PlanetHopView extends View {
         int y = rand.nextInt(500) + 1;
         float  velocityx=    rand.nextInt(5) + 1;
         float  velocityy=    rand.nextInt(5) + 1;
-        Comet comet = new Comet(0, y,velocityx,velocityy, 20, main,venusImage);
+        Comet comet = new Comet(0, y,velocityx,velocityy, 7, main,venusImage);
         comets.add(comet);
     }
 
@@ -120,9 +120,13 @@ public class PlanetHopView extends View {
 
         }
         private void updateWorldPhysics(Canvas canvas) {
+
+
             home.update(canvas, rocket);
             destination.update(canvas, rocket);
             rocket.update(canvas);
+            if(rand.nextInt(75)== 0)
+                createCometLeft();
             drawComets(canvas);
         }
 
