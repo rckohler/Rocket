@@ -17,6 +17,7 @@ public class AnimatedObject {
     MoveDirection direction = MoveDirection.east;
 	public boolean isAnimated = true;
 	public Animation animation;
+    public boolean collisionFlag; //indicates that a collision was detected.
 
 	public float radius=20; // radius of object
 	public float rx=40; //position of object on x and y axis
